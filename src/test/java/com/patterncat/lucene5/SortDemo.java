@@ -83,7 +83,7 @@ public class SortDemo {
     }
 
     /**
-     * 按文档的综合相似度排序
+     * 按文档的得分排序
      * @throws IOException
      */
     @Test
