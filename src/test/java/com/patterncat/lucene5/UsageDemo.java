@@ -4,10 +4,7 @@ import org.apache.lucene.analysis.TokenStream;
 import org.apache.lucene.analysis.cjk.CJKAnalyzer;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.analysis.tokenattributes.CharTermAttribute;
-import org.apache.lucene.document.Document;
-import org.apache.lucene.document.Field;
-import org.apache.lucene.document.StringField;
-import org.apache.lucene.document.TextField;
+import org.apache.lucene.document.*;
 import org.apache.lucene.index.*;
 import org.apache.lucene.queryparser.classic.QueryParser;
 import org.apache.lucene.search.IndexSearcher;
@@ -57,6 +54,9 @@ public class UsageDemo {
     private void addDoc(IndexWriter w, String title,String desc,String isbn) throws IOException {
         Document doc = new Document();
         doc.add(new TextField("title", title, Field.Store.YES));
+        //add for sorting
+        //http://stackoverflow.com/questions/29695307/sortiing-string-field-alphabetically-in-lucene-5-0
+        doc.add(new SortedDocValuesField("title", new BytesRef(title)));
         doc.add(new TextField("desc",desc,Field.Store.YES));
         // use a string field for isbn because we don't want it tokenized
         doc.add(new StringField("isbn", isbn, Field.Store.YES));
